@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Portal</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div id="navbar">
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/game1">AVD Labyrinth</a></li>
+            <li><a href="/game2">CMO Drawing Game</a></li>
+            <li><a href="/game3">NMD TBD</a></li>
+        </ul>
+    </div>
+    <div id="main-content">
+        <h1>Welkom, test gebruiker!👋</h1>
+        <p>Je bent nu ingelogd. Hier kun je onze games bekijken en spelen.</p>
+
+        <h2>Je games</h2>
+        <div class="game">
+            <h3>AVD Labyrinth</h3>
+            <p>Je hebt dit spel nog niet gespeeld.</p>
+            <button onclick="location.href='{{ url_for('game1') }}'">Speel</button>
+            <img src="{{ url_for('static', filename='images/AVD.jpg') }}" alt="AVD">
+            </div>
+        <div class="game">
+            <h3>CMO Drawing Game</h3>
+            <p>Je hebt dit spel nog niet gespeeld.</p>
+            <button onclick="location.href='{{ url_for('game2') }}'">Speel</button>
+            <img src="{{ url_for('static', filename='images/CMO.jpg') }}" alt="CMO">
+            </div>
+        <div class="game">
+            <h3>NMD TBD</h3>
+            <p>Je hebt dit spel nog niet gespeeld.</p>
+            <button onclick="location.href='{{ url_for('game3') }}'">Speel</button>
+            <img src="{{ url_for('static', filename='images/NMD.jpg') }}" alt="NMD">
+            </div>
+    </div>
+
+    <div id="user-section">
+        <button onclick="location.href='{{ url_for('login') }}'">Login</button>
+        <button onclick="location.href='{{ url_for('register') }}'">Register</button>
+    </div>
+</body>
+</html>

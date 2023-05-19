@@ -6,6 +6,7 @@
 </head>
 <body>
     <div id="register-form">
+        {% block content %}
         <h2>Register</h2>
         <form method="POST" action="{{ url_for('register') }}">
             <label for="email">Email</label>
@@ -18,6 +19,7 @@
             <input type="password" id="confirm_password" name="confirm_password" required>
             <input type="submit" value="Register">
         </form>
+        {% endblock %}
         <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
     </div>
 </body>

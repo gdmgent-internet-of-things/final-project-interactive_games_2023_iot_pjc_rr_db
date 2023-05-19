@@ -7,14 +7,13 @@
 <body>
     <div id="navbar">
         <ul>
-            <li><a href="/home">Home</a></li>
+            <li><a href="#">Home</a></li>
             <li><a href="/game1">AVD Labyrinth</a></li>
             <li><a href="/game2">CMO Drawing Game</a></li>
             <li><a href="/game3">NMD TBD</a></li>
-        </ul>
     </div>
     <div id="main-content">
-        <h1>Welkom, test gebruiker!👋</h1>
+        <h1>Welcome, {{ current_user.username }}!👋</h1>
         <p>Je bent nu ingelogd. Hier kun je onze games bekijken en spelen.</p>
 
         <h2>Je games</h2>
@@ -38,9 +37,15 @@
             </div>
     </div>
 
+    <div class="profile">
+        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile Image">
+        <h2>{{ current_user.username }}</h2>
+        <p>Level 1</p>
+      </div>
+
     <div id="user-section">
-        <button onclick="location.href='{{ url_for('login') }}'">Login</button>
-        <button onclick="location.href='{{ url_for('register') }}'">Register</button>
+            <button onclick="location.href='{{ url_for('login') }}'">Login</button>
+            <button onclick="location.href='{{ url_for('register') }}'">Register</button>
     </div>
 </body>
 </html>

@@ -15,6 +15,12 @@
             <input type="submit" value="Login">
         </form>
         <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+
+            {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+    {% endif %}
     </div>
 </body>
 </html>

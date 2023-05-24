@@ -235,3 +235,81 @@ bucketTool.addEventListener('click', () => {
   ctx.fillStyle = ctx.strokeStyle;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
+
+// Initialize the canvas state array
+const canvasStates = [];
+
+// Function to save the current canvas state
+function saveCanvasState() {
+  canvasStates.push(canvas.toDataURL());
+}
+
+// Function to restore the previous canvas state
+function restoreCanvasState() {
+  if (canvasStates.length > 0) {
+    const canvasState = canvasStates.pop();
+    const image = new Image();
+    image.src = canvasState;
+    image.onload = function() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0);
+    };
+  }
+}
+
+// Add event listener for keydown events
+document.addEventListener('keydown', function(event) {
+  // Check if the Ctrl key and the Z key are pressed at the same time
+  if (event.ctrlKey && event.key === 'z') {
+    // Undo the last action
+    restoreCanvasState();
+  }
+});
+
+// Add event listener for mousedown events
+canvas.addEventListener('mousedown', function(event) {
+  // Save the current canvas state before making any changes
+  saveCanvasState();
+
+  // ...
+});
+
+
+// Function to remove the dot from the canvas
+function removeDot() {
+  // ...
+}
+
+// Function to restore the previous canvas state
+function restoreCanvasState() {
+  if (canvasStates.length > 0) {
+    const canvasState = canvasStates.pop();
+    const image = new Image();
+    image.src = canvasState;
+    image.onload = function() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0);
+    };
+  }
+}
+
+// Add event listener for keydown events
+document.addEventListener('keydown', function(event) {
+  // Check if the Ctrl key and the Z key are pressed at the same time
+  if (event.ctrlKey && event.key === 'z') {
+    // Remove the dot from the canvas
+    removeDot();
+
+    // Undo the last action
+    restoreCanvasState();
+  }
+});
+
+// Add event listener for mousedown events
+canvas.addEventListener('mousedown', function(event) {
+  // Save the current canvas state before making any changes
+  saveCanvasState();
+
+  // Add the dot to the canvas
+  addDot();
+});

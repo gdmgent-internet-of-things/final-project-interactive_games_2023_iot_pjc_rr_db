@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Maze Game</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/game1.css') }}">
   <style>
     canvas {
       border: 1px solid black;
@@ -12,6 +12,6 @@
 <body>
   <canvas id="mazeCanvas"></canvas>
 
-  <script src="maze.js"></script>
+  <script src="{{ url_for('static', filename='js/game1.js') }}"></script>
 </body>
 </html>

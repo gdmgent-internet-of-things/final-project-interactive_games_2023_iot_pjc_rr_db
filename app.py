@@ -6,6 +6,13 @@ from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from flask_wtf.csrf import generate_csrf
 from flask_login import current_user, login_required, UserMixin
+from werkzeug.utils import secure_filename
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField, FileField
+from wtforms.validators import DataRequired, Email, EqualTo
+import os
+from alembic import op
+import sqlalchemy as sa
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -19,6 +26,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False)
     password_hash = db.Column(db.String(128), nullable=False, server_default='')
 
+
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
@@ -29,6 +37,12 @@ class User(db.Model, UserMixin):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+class RegistrationForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -71,6 +85,7 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html')
+
 
 @app.route('/logout', methods=['POST'])
 @login_required

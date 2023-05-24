@@ -1,80 +1,57 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Magnetic Drawing Tablet</title>
-    <style>
-      body {
-        background-color: black;
-      }
-      canvas {
-        background-color: white;
-        display: block;
-        margin: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <canvas id="draw" width="800" height="800"></canvas>
-    <button onclick="clearCanvas()">Clear Canvas</button>
-    <input type="color" id="color-picker" onchange="changeColor()">
-    <script>
-      const canvas = document.getElementById('draw');
-      const ctx = canvas.getContext('2d');
-      let isDrawing = false;
-      let lastX = 0;
-      let lastY = 0;
-      let hue = 0;
-      let direction = true;
-  
-      canvas.addEventListener('mousedown', startDrawing);
-      canvas.addEventListener('mousemove', draw);
-      canvas.addEventListener('mouseup', stopDrawing);
-      canvas.addEventListener('mouseout', stopDrawing);
-  
-      function startDrawing(e) {
-        isDrawing = true;
-        [lastX, lastY] = [e.clientX, e.clientY];
-      }
-  
-      function draw(e) {
-        if (!isDrawing) return;
-        ctx.lineWidth = 10;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-        ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(e.clientX, e.clientY);
-        ctx.stroke();
-        [lastX, lastY] = [e.clientX, e.clientY];
-        hue++;
-        if (hue >= 360) {
-          hue = 0;
-        }
-        if (ctx.lineWidth >= 50 || ctx.lineWidth <= 1) {
-          direction = !direction;
-        }
-        if (direction) {
-          ctx.lineWidth++;
-        } else {
-          ctx.lineWidth--;
-        }
-      }
-  
-      function stopDrawing() {
-        isDrawing = false;
-      }
-  
-      function clearCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-  
-      function changeColor() {
-        const colorPicker = document.getElementById('color-picker');
-        const color = colorPicker.value;
-        ctx.strokeStyle = color;
-      }
-    </script>
-  </body>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="toolBar" class="toolbar">
+    <div id="radiusTool" class="radius__tool">
+      <span>RADIUS</span>
+      <input type="range" name="radiusPoint" id="radiusPoint" class="radius__point" min="1" max="300" step="1"
+        value="10">
+      <span id="radTextRaduis">10</span>
+    </div>
+    <div id="radiusTool" class="radius__tool">
+      <span>BLUR</span>
+      <input type="range" name="radiusBlur" id="radiusBlur" class="radius__point" min="0" max="100" step="1" value="0">
+      <span id="radTextBlur">0</span>
+    </div>
+    <div id="selectColors" class="select__colors">
+      <input type="radio" name="radioColors" id="red" value="#FF0000">
+      <label for="red" class="radio__colors"></label>
+      <input type="radio" name="radioColors" id="blue" value="#2E8B57">
+      <label for="blue" class="radio__colors"></label>
+      <input type="radio" name="radioColors" id="green" value="#1E90FF">
+      <label for="green" class="radio__colors"></label>
+      <input type="radio" name="radioColors" id="yellow" value="#FFFF00">
+      <label for="yellow" class="radio__colors"></label>
+      <input type="radio" name="radioColors" id="pink" value="#FF69B4">
+      <label for="pink" class="radio__colors"></label>
+      <input type="radio" name="radioColors" id="gray" value="#A9A9A9">
+      <label for="gray" class="radio__colors"></label>
+      <input type="radio" name="radioColors" id="white" checked value="#FFFFFF">
+      <label for="white" class="radio__colors"></label>
+      <input type="radio" name="radioColors" id="black" checked value="#111111">
+      <label for="black" class="radio__colors"></label>
+
+    </div>
+    <div class="buttons__canvas">
+      <button id="bucket-tool" class="  ">Fill</button>
+      <button type="button" id="saveCanvas" class="btn__save">SAVE</button>
+      <button type="button" id="clearCanvas" class="btn__clear">CLEAR</button>
+    </div>
+  </div>
+  <canvas id="canvas">
+    Sorry, your browser is rubbish.
+  </canvas>
+  <script src="./js/game2.js"></script>
+</body>
+
 </html>

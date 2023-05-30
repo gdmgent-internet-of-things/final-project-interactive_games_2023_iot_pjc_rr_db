@@ -1,9 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" >
 <head>
-    <title>Game 3</title>
+  <meta charset="UTF-8">
+  <title>Dodge Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/game3.css') }}">
+
 </head>
 <body>
-    <h1>Game 3</h1>
+<!-- partial:index.partial.html -->
+
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js'></script>
+<script src="{{ url_for('static', filename='js/game3.js') }}"></script>
 </body>
 </html>

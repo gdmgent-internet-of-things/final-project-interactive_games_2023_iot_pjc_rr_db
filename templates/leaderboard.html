@@ -2,47 +2,7 @@
 <html>
 <head>
     <title>Leaderboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #202020;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-
-        h1 {
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        table {
-            margin: 0 auto;
-            border-collapse: collapse;
-            width: 50%;
-            background-color: #151515;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-
-        th, td {
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #e82d2d;
-            color: #ffffff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #202020;
-        }
-
-        tr:hover {
-            background-color: #a30f0f;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/leaderboard.css') }}">
 </head>
 <body>
     <h1>Leaderboard</h1>

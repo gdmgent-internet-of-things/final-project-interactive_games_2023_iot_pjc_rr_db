@@ -2,8 +2,19 @@
 <html>
 <head>
     <title>Game 3</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/game3.css') }}">
 </head>
 <body>
-    <h1>Game 3</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <canvas id="hiddenCanvas" width="640" height="480" style="display: none;"></canvas>
+    <div class="btns">
+        <button id="clear">Clear</button>
+        <label for="colorPicker">Change Color:</label>
+        <input type="color" id="colorPicker" value="#FFFFFF">
+        <button id="savePic">Save Picture</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/game3.js') }}"></script>
 </body>
 </html>
+

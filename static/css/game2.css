@@ -227,3 +227,25 @@ input[type=radio]:checked + .radio__colors:before {
 .btn__save:hover {
     cursor: pointer;
 }
+
+/* Set the width and height of the scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  /* Set the background color of the scrollbar track */
+  ::-webkit-scrollbar-track {
+    background-color: #151515;
+  }
+  
+  /* Set the color and rounded corners of the scrollbar thumb */
+  ::-webkit-scrollbar-thumb {
+    background-color: #e82d2d;
+    border-radius: 5px;
+  }
+  
+  /* Set the color and rounded corners of the scrollbar thumb on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #a30f0f;
+  }

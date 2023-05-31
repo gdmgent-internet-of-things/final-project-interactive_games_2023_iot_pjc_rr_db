@@ -1,19 +1,77 @@
-html,
 body {
-  height: 100%;
-  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #202020;
+  color: #ffffff;
   margin: 0;
   padding: 0;
-  background-color: #000;
-  color: #fff;
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  /* overflow: hidden; */
+  scroll-behavior: smooth;
 }
 
-#mazeCanvas {
-  display: block;
-  margin: 10% auto;
- 
+#game {
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  border: 5px solid #000000;
+}
+
+#game table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+}
+
+#game td {
+  width: 4%;
+  height: 4%;
+}
+
+#game .empty {
+  background-color: #151515;
+}
+
+#game .wall {
+  background-color: #a30f0f;
+}
+
+#game .player {
+  background-color: #0011ff;
+}
+
+#game .exit {
+  background-color: #07cc00;
+}
+
+#score {
+  color: #a30f0f;
+  text-align: center;
+  font-size: 80px;
+  margin-top: 100px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#leaderboard-button {
+  background-color: #e82d2d;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+}
+
+#leaderboard-button:hover {
+  background-color: #a30f0f;
+}
+
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

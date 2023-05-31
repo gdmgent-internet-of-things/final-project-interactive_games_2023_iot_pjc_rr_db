@@ -3,15 +3,16 @@
 <head>
   <title>Maze Game</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/game1.css') }}">
-  <style>
-    canvas {
-      border: 1px solid black;
-    }
-  </style>
 </head>
 <body>
-  <canvas id="mazeCanvas"></canvas>
 
-  <script src="{{ url_for('static', filename='js/game1.js') }}"></script>
+  <div id="game-container">
+    <div id="game"></div>
+    <button id="leaderboard-button">View Leaderboard</button>
+  </div>
+  
+
+<script src="{{ url_for('static', filename='js/game1.js') }}"></script> -->
+  <script src="{{ url_for('static', filename='js/labyrinth.js') }}"></script>
 </body>
 </html>

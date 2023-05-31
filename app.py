@@ -14,12 +14,15 @@ import os
 from alembic import op
 import sqlalchemy as sa
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = 'secretkey'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login_manager = LoginManager(app)
+
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,6 +46,18 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
+ 
+ 
+class Leaderboard(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False)
+    score = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f"Leaderboard(username='{self.username}', score={self.score})"
+
+with app.app_context():
+    db.create_all()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -108,6 +123,29 @@ def game2():
 @login_required
 def game3():
     return render_template('game3.html')
+
+
+@app.route('/leaderboard', methods=['GET', 'POST'])
+@login_required
+def leaderboard():
+    if request.method == 'POST':
+        score = request.form.get('score') 
+        if score is not None:
+            score = int(score)
+            leaderboard_entry = Leaderboard.query.filter_by(username=current_user.username).first()
+            if leaderboard_entry:
+                if score > leaderboard_entry.score:
+                    leaderboard_entry.score = score
+            else:
+                leaderboard_entry = Leaderboard(username=current_user.username, score=score)
+                db.session.add(leaderboard_entry)
+            db.session.commit()
+        return "Score updated", 200
+    else:
+        scores = Leaderboard.query.order_by(Leaderboard.score.desc()).all()
+        return render_template('leaderboard.html', scores=scores)
+
+
 
 @app.route('/users')
 @login_required

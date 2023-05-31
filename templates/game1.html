@@ -9,10 +9,16 @@
   <div id="game-container">
     <div id="game"></div>
     <button id="leaderboard-button">View Leaderboard</button>
+    <button id="home-button">Home</button>
   </div>
   
 
 <script src="{{ url_for('static', filename='js/game1.js') }}"></script> -->
   <script src="{{ url_for('static', filename='js/labyrinth.js') }}"></script>
+  <script>
+    document.getElementById('home-button').addEventListener('click', function() {
+      window.location.href = '/';
+    });
+  </script>
 </body>
 </html>

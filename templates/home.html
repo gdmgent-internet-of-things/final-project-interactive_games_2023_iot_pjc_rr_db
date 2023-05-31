@@ -21,7 +21,8 @@
             <h3>AVD Labyrinth</h3>
             <p>Je hebt dit spel nog niet gespeeld.</p>
             <button onclick="location.href='{{ url_for('game1') }}'">Speel</button>
-            <img src="{{ url_for('static', filename='images/AVD.jpg') }}" alt="AVD">
+            <button onclick="location.href='{{ url_for('leaderboard') }}'">Leaderboard</button>
+            <img src="{{ url_for('static', filename='images/AVD.png') }}" alt="AVD">
             </div>
         <div class="game">
             <h3>CMO Drawing Game</h3>
@@ -43,10 +44,15 @@
         <p>Level 1</p>
       </div>
 
-    <div id="user-section">
+      <div id="user-section">
+        {% if current_user.is_authenticated %}
+            <button onclick="location.href='{{ url_for('logout') }}'">Logout</button>
+        {% else %}
             <button onclick="location.href='{{ url_for('login') }}'">Login</button>
             <button onclick="location.href='{{ url_for('register') }}'">Register</button>
+        {% endif %}
     </div>
+    
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

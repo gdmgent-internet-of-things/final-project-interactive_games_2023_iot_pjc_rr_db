@@ -102,12 +102,13 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/logout', methods=['POST'])
+@app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     logout_user()
     flash('You have been logged out')
     return redirect(url_for('home'))
+
 
 @app.route('/game1')
 @login_required

@@ -75,3 +75,21 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+#home-button {
+  background-color: #e82d2d;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 120px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+}
+
+#leaderboard-button:hover {
+  background-color: #a30f0f;
+}

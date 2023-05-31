@@ -2,8 +2,44 @@
 <html>
 <head>
     <title>Game 3</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <h1>Game 3</h1>
+    <p>Score: <span id="score">0</span></p>
+    <button id="start">Start Game</button>
+    <button id="stop" disabled>Stop Game</button>
+    <script>
+        var score = 0;
+        var intervalId = null;
+
+        $('#start').click(function() {
+            score = 0;
+            $('#score').text(score);
+            $(this).prop('disabled', true);
+            $('#stop').prop('disabled', false);
+            intervalId = setInterval(function() {
+                score += 1;
+                $('#score').text(score);
+            }, 1000);
+        });
+
+        $('#stop').click(function() {
+            clearInterval(intervalId);
+            $(this).prop('disabled', true);
+            $('#start').prop('disabled', false);
+            $.ajax({
+                url: '/leaderboard',
+                type: 'POST',
+                data: {score: score},
+                success: function(response) {
+                    alert(response);
+                },
+                error: function(xhr, status, error) {
+                    alert('An error occurred: ' + error);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

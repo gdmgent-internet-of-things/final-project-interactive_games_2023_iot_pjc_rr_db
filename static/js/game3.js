@@ -7,6 +7,7 @@ const colorPicker = document.getElementById('colorPicker');
 const savePic = document.getElementById('savePic');
 const hiddenCanvas = document.getElementById('hiddenCanvas');
 const hiddenContext = hiddenCanvas.getContext('2d');
+const stroke = document.getElementById('stroke');
 
 // Drawing variables
 let drawing = false;
@@ -28,7 +29,7 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 function draw(e) {
     if(!drawing) return;
     context.strokeStyle = currentColor;
-    context.lineWidth = 2;
+    context.lineWidth = stroke.value;
     context.beginPath();
     context.moveTo(lastX, lastY);
     context.lineTo(e.offsetX, e.offsetY);
@@ -63,4 +64,35 @@ savePic.addEventListener('click', function() {
     link.href = dataURL;
     link.download = 'myImage.png';
     link.click();
+});
+
+
+const prompts = [
+    "Draw a moustache!",
+    "Draw a pair of glasses!",
+    "Can you draw a hat?",
+    "Draw a beard!",
+    "Draw a crown!",
+    "Draw a pair of earrings!",
+    "Draw a necklace!",
+    "Draw a pair of sunglasses!",
+    "Draw a tie!",
+    "Draw some clouds and a sun!",
+];
+
+window.onload = function() {
+    const promptElement = document.getElementById('prompt');
+    const randomIndex = Math.floor(Math.random() * prompts.length);
+    promptElement.textContent = prompts[randomIndex];
+}
+
+const freeze = document.getElementById('freeze');
+const unfreeze = document.getElementById('unfreeze');
+
+freeze.addEventListener('click', () => {
+    video.pause();
+});
+
+unfreeze.addEventListener('click', () => {
+    video.play();
 });

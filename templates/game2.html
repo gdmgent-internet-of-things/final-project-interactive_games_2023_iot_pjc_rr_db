@@ -7,51 +7,19 @@
   <link rel="icon" href="https://lh3.googleusercontent.com/NGCu86DtTx1VYobcGPNJgcnQOBfFRZOiTWN0Uvdm0Qlweoa9Mw9CqcEw1Lu6XGdQlMb5ywhy7iGucH2-5eslb97sYCs-HG4iQq-V0n_gv3Bp8GrN889TexMmonbtENCItjBjSNgH7y6Sll4gY1Il7NEWx5fjmxNsz2IBfdbSS_p0aOJxFDAIL_K_DO1CmQJ5WyMqHFTPZvP5KeSLKK2zAnWrBAigvXfvLp7uJuRD283zEoHep2cGFPJIvrs7RNXf5XMNdkJ4WbcgirKSUloJ8cC48jevBV_8OBo4H_CL3mCK4UmfnnrzXAQdSbp0xmoPWbkGKSkQQye9dD96fbSTkk8U-QpGu20q-hiy3duncEQ_tKwaidlFVVeBZS-tTIalGZpizMUza27ZOOcEycla9NiKrLOrc8ffy6tn-rPxxncM8ZQDyPRL2DL6Kf5Z7fyWvsAV86e_5YhNkidf9Mkhc7Ot-abPmhD-T4XmQKPwpUWSHtKNF_K4MNTX3Q6Xte5CNLtRrVedWzr0-2V-PJzEY7ype6oH70DVOIG-KqFvEJwfOGXhJFBAAdkSnG9mCH4PSXalQZfOqbuT9Z8Bca22ztrTkX6VXHqsYl3nEbjSbD-ESFFQum61ZigYY4C2wGTGUfe6yl2McAg0-g3X7gS9Kz4mS_oArmGOZ7bqQUUucBEMSGZbiKzRfRJ-dpCeAPAM6L4z0NFuOSG4mO5NtCeBVZDcOPonzmdkEkKKl8VeVNyek3RjG-i-yG2azbeQIaGE_Kqv8VUrsmrg8XM4sfrAFwrsg-PQO1xwTckHgMDbOfl4IMYn3YgFQy64fXuLYkYYRRbouW6UWV2L8eDuFglKxlZqx6BBaTLVuiQH5ukkbRnww9YSx4_cveb6L1JjaU94BfrEqP0PQ-myMWMSdI6b6wv9X0kDRJsRi1yMDzMO5LIVPCIxJ-sEpDT8I09MRqVfsu58K4u0dw6Jz2HjyZIp9HONwUg3GwgNNSOXa495l4IghlEUhaLzo7J1pnY=w512-h512-s-no?authuser=0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/game2.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
   <title>Document</title>
+  <style>
+    #gameCanvas {
+        border: 1px solid black;
+    }
+</style>
 </head>
-
 <body>
-  <div id="toolBar" class="toolbar">
-    <div id="radiusTool" class="radius__tool">
-      <span>RADIUS</span>
-      <input type="range" name="radiusPoint" id="radiusPoint" class="radius__point" min="1" max="300" step="1"
-        value="10">
-      <span id="radTextRaduis">10</span>
-    </div>
-    <div id="radiusTool" class="radius__tool">
-      <span>BLUR</span>
-      <input type="range" name="radiusBlur" id="radiusBlur" class="radius__point" min="0" max="100" step="1" value="0">
-      <span id="radTextBlur">0</span>
-    </div>
-    <div id="selectColors" class="select__colors">
-      <input type="radio" name="radioColors" id="red" value="#FF0000">
-      <label for="red" class="radio__colors"></label>
-      <input type="radio" name="radioColors" id="blue" value="#2E8B57">
-      <label for="blue" class="radio__colors"></label>
-      <input type="radio" name="radioColors" id="green" value="#1E90FF">
-      <label for="green" class="radio__colors"></label>
-      <input type="radio" name="radioColors" id="yellow" value="#FFFF00">
-      <label for="yellow" class="radio__colors"></label>
-      <input type="radio" name="radioColors" id="pink" value="#FF69B4">
-      <label for="pink" class="radio__colors"></label>
-      <input type="radio" name="radioColors" id="gray" value="#A9A9A9">
-      <label for="gray" class="radio__colors"></label>
-      <input type="radio" name="radioColors" id="white" checked value="#FFFFFF">
-      <label for="white" class="radio__colors"></label>
-      <input type="radio" name="radioColors" id="black" checked value="#111111">
-      <label for="black" class="radio__colors"></label>
-
-    </div>
-    <div class="buttons__canvas">
-      <button id="bucket-tool" class="  ">Fill</button>
-      <button type="button" id="saveCanvas" class="btn__save">SAVE</button>
-      <button type="button" id="clearCanvas" class="btn__clear">CLEAR</button>
-    </div>
-  </div>
-  <canvas id="canvas">
-    Sorry, your browser is rubbish.
-  </canvas>
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
   <script src="{{ url_for('static', filename='js/game2.js') }}"></script>
 </body>
 
 </html>
+

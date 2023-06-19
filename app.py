@@ -56,6 +56,15 @@ class Leaderboard(db.Model):
     def __repr__(self):
         return f"Leaderboard(username='{self.username}', score={self.score})"
 
+class SnakeGameLeaderboard(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False)
+    score = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f"SnakeGameLeaderboard(username='{self.username}', score={self.score})"
+
+
 with app.app_context():
     db.create_all()
 
@@ -153,3 +162,26 @@ def leaderboard():
 def users():
     all_users = User.query.all()
     return render_template('users.html', all_users=all_users)
+
+
+from flask_login import current_user, login_required
+
+@app.route('/snakegame_leaderboard', methods=['POST'])
+@login_required
+def snakegame_leaderboard():
+    score = request.form.get('score')
+    if score is not None:
+        score = int(score)
+        if current_user.is_authenticated:
+            leaderboard_entry = SnakeGameLeaderboard.query.filter_by(username=current_user.username).first()
+            if leaderboard_entry:
+                if score > leaderboard_entry.score:
+                    leaderboard_entry.score = score
+            else:
+                leaderboard_entry = SnakeGameLeaderboard(username=current_user.username, score=score)
+                db.session.add(leaderboard_entry)
+            db.session.commit()
+        else:
+            return "User not authenticated", 401
+    return "Score updated", 200
+

@@ -55,14 +55,15 @@ class Leaderboard(db.Model):
 
     def __repr__(self):
         return f"Leaderboard(username='{self.username}', score={self.score})"
-
-class SnakeGameLeaderboard(db.Model):
+    
+class SnakeGameScore(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False)
-    score = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(50))  # new field for player's name
+    score = db.Column(db.Integer)
 
     def __repr__(self):
-        return f"SnakeGameLeaderboard(username='{self.username}', score={self.score})"
+        return f"SnakeGameScore(name={self.name}, score={self.score})"
+
 
 
 with app.app_context():
@@ -124,15 +125,15 @@ def logout():
 def game1():
     return render_template('game1.html')
 
-@app.route('/game2')
-@login_required
-def game2():
-    return render_template('game2.html')
-
 @app.route('/game3')
 @login_required
 def game3():
     return render_template('game3.html')
+
+@app.route('/game4')
+@login_required
+def game4():
+    return render_template('game4.html')
 
 
 @app.route('/leaderboard', methods=['GET', 'POST'])
@@ -155,8 +156,6 @@ def leaderboard():
         scores = Leaderboard.query.order_by(Leaderboard.score.desc()).all()
         return render_template('leaderboard.html', scores=scores)
 
-
-
 @app.route('/users')
 @login_required
 def users():
@@ -164,24 +163,16 @@ def users():
     return render_template('users.html', all_users=all_users)
 
 
-from flask_login import current_user, login_required
+@app.route('/snake_score', methods=['POST'])
+def save_snake_score():
+    data = request.get_json()
+    new_score = SnakeGameScore(name=data['name'], score=data['score'])
+    db.session.add(new_score)
+    db.session.commit()
+    return {"message": "Score saved successfully"}, 201
 
-@app.route('/snakegame_leaderboard', methods=['POST'])
-@login_required
-def snakegame_leaderboard():
-    score = request.form.get('score')
-    if score is not None:
-        score = int(score)
-        if current_user.is_authenticated:
-            leaderboard_entry = SnakeGameLeaderboard.query.filter_by(username=current_user.username).first()
-            if leaderboard_entry:
-                if score > leaderboard_entry.score:
-                    leaderboard_entry.score = score
-            else:
-                leaderboard_entry = SnakeGameLeaderboard(username=current_user.username, score=score)
-                db.session.add(leaderboard_entry)
-            db.session.commit()
-        else:
-            return "User not authenticated", 401
-    return "Score updated", 200
 
+@app.route('/snake_leaderboard')
+def snake_leaderboard():
+    scores = SnakeGameScore.query.order_by(SnakeGameScore.score.desc()).all()
+    return render_template('snake_leaderboard.html', scores=scores)

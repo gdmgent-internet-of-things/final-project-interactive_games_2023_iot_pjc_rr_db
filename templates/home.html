@@ -9,9 +9,9 @@
     <div id="navbar">
         <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="/game1">AVD Labyrinth</a></li>
-            <li><a href="/game2">CMO Drawing Game</a></li>
-            <li><a href="/game3">NMD TBD</a></li>
+            <li><a href="/game1">Echo Maze</a></li>
+            <li><a href="/game3">Drawscape</a></li>
+            <li><a href="/game4">SerpentSway</a></li>
     </div>
     <div id="main-content">
         <h1>Welcome, {{ current_user.username }}!👋</h1>
@@ -19,23 +19,24 @@
 
         <h2>Je games</h2>
         <div class="game">
-            <h3>AVD Labyrinth</h3>
-            <p>Je hebt dit spel nog niet gespeeld.</p>
+            <h3>Echo Maze</h3>
+            <p>"Echo Maze" is a voice-controlled labyrinth game where you use your voice to navigate through challenging mazes and conquer obstacles. Speak commands to guide your character through intricate puzzles and explore immersive environments. Put your voice to the test and conquer the depths of the labyrinth in "Echo Maze"!</p>
             <button onclick="location.href='{{ url_for('game1') }}'">Speel</button>
             <button onclick="location.href='{{ url_for('leaderboard') }}'">Leaderboard</button>
-            <img src="{{ url_for('static', filename='images/AVD.png') }}" alt="AVD">
+            <img src="{{ url_for('static', filename='images/EchoMaze.jpg') }}" alt="EchoMaze">
             </div>
         <div class="game">
-            <h3>CMO Drawing Game</h3>
-            <p>Je hebt dit spel nog niet gespeeld.</p>
-            <button onclick="location.href='{{ url_for('game2') }}'">Speel</button>
-            <img src="{{ url_for('static', filename='images/CMO.jpg') }}" alt="CMO">
-            </div>
-        <div class="game">
-            <h3>NMD TBD</h3>
-            <p>Je hebt dit spel nog niet gespeeld.</p>
+            <h3>Drawscape</h3>
+            <p>Drawscape is a dynamic drawing game where your face becomes the canvas. Each prompt challenges you to draw different designs or objects directly on your own face using the camera display. Freeze the frame to perfect your masterpiece and save it as a PNG image. Unleash your creativity, have fun, and create memorable face artworks with Drawscape!</p>
             <button onclick="location.href='{{ url_for('game3') }}'">Speel</button>
-            <img src="{{ url_for('static', filename='images/NMD.jpg') }}" alt="NMD">
+            <img src="{{ url_for('static', filename='images/drawscape.jpg') }}" alt="drawscape">
+            </div>
+        <div class="game">
+            <h3>SerpentSway</h3>
+            <p>SerpentSway is an immersive snake game that puts you in control of a slithering serpent using just your finger. Navigate through the virtual world, collecting food to grow your snake while avoiding collisions with the boundaries and your own body. The intuitive finger control adds an interactive twist, allowing you to guide the snake's movements with precision and agility. Challenge yourself to achieve the highest score and become the ultimate SerpentSway master!</p>
+            <button onclick="location.href='{{ url_for('game4') }}'">Speel</button>
+            <button onclick="location.href='{{ url_for('snake_leaderboard') }}'">Leaderboard</button>
+            <img src="{{ url_for('static', filename='images/SerpentSway.jpg') }}" alt="SerpentSway">
             </div>
     </div>
 

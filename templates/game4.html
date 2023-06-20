@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SerpentSway - Download</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div id="navbar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="/game1">Echo Maze</a></li>
+            <li><a href="/game3">Drawscape</a></li>
+            <li><a href="/game4">SerpentSway</a></li>
+    </div>
+    
+    <div id="main-content">
+        <h1>SerpentSway</h1>
+        <div class="game">
+            <img src="{{ url_for('static', filename='images/SerpentSway.jpg') }}" alt="drawscape">
+            <p>You need to download this file separately</p>
+            <button><a href="/zips/SerpentSway.zip" download>Download Now</a></button>
+        </div>
+    </div>
+    
+    <div class="profile">
+        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile Image">
+        <h2>{{ current_user.username }}</h2>
+        <p>Level 1</p>
+      </div>
+
+      <div id="user-section">
+        {% if current_user.is_authenticated %}
+            <button onclick="location.href='{{ url_for('logout') }}'">Logout</button>
+        {% else %}
+            <button onclick="location.href='{{ url_for('login') }}'">Login</button>
+            <button onclick="location.href='{{ url_for('register') }}'">Register</button>
+        {% endif %}
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    
+</body>
+</html>

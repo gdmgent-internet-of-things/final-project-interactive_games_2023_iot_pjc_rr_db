@@ -3,7 +3,7 @@ let playerPosition = { x: 0, y: 0 };
 let exitPosition = { x: 0, y: 0 };
 let score = 0;
 
-const gridSize = 25; // You can adjust the size of the grid
+const gridSize = 8; // You can adjust the size of the grid
 
 function generateLabyrinth() {
     let isSolvable = false;
@@ -12,7 +12,7 @@ function generateLabyrinth() {
         for(let i = 0; i < gridSize; i++) {
             labyrinth[i] = [];
             for(let j = 0; j < gridSize; j++) {
-                labyrinth[i][j] = Math.random() < 0.45 ? 'wall' : 'empty'; // 30% chance of a cell being a wall
+                labyrinth[i][j] = Math.random() < 0.28 ? 'wall' : 'empty'; // 30% chance of a cell being a wall
             }
         }
 
@@ -117,6 +117,58 @@ function renderGame() {
 // Call these functions to start the game
 generateLabyrinth();
 renderGame(); // Render the game at the start
+
+// ... rest of your existing code ...
+
+// Voice command logic
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = new window.SpeechRecognition();
+
+// recognition.interimResults = true; // Add this line
+
+recognition.start();
+
+recognition.addEventListener('result', (e) => {
+    const command = Array.from(e.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join('');
+
+    switch(command.toLowerCase()) {
+        case 'python':
+            movePlayer(-1, 0);
+            break;
+        case 'javascript':
+            movePlayer(1, 0);
+            break;
+        case 'raspberry':
+            movePlayer(0, -1);
+            break;
+        case 'laptop':
+            movePlayer(0, 1);
+            break;
+    }
+
+    // after processing the command, start recognition again for the next command
+    recognition.start();
+});
+
+recognition.addEventListener('end', recognition.start);
+
+// Keyboard event listeners
+window.addEventListener('keydown', function(event) {
+    switch(event.key) {
+        case 'ArrowUp':    movePlayer(-1, 0); break;
+        case 'ArrowDown':  movePlayer(1, 0); break;
+        case 'ArrowLeft':  movePlayer(0, -1); break;
+        case 'ArrowRight': movePlayer(0, 1); break;
+    }
+});
+
+document.getElementById('leaderboard-button').addEventListener('click', function() {
+    window.location.href = '/leaderboard';
+});
+
 
 // Add event listeners for the arrow keys
 window.addEventListener('keydown', function(event) {

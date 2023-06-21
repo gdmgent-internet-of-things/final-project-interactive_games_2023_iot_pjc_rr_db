@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+    overscroll-behavior-x: none;
   }
 
 #video, #canvas {
@@ -130,3 +131,11 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
+
+@media screen and (max-width: 600px) {
+    .btns {
+      position: static;
+      transform: none;
+    }
+  }
+  

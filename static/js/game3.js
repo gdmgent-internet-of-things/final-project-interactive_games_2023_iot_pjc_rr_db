@@ -25,26 +25,51 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     });
 }
 
-// Drawing function
-function draw(e) {
+// Existing Drawing function
+function draw(x, y) {
     if(!drawing) return;
     context.strokeStyle = currentColor;
     context.lineWidth = stroke.value;
     context.beginPath();
     context.moveTo(lastX, lastY);
-    context.lineTo(e.offsetX, e.offsetY);
+    context.lineTo(x, y);
     context.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    [lastX, lastY] = [x, y];
 }
 
-// Event listeners
+// New touch event handler functions
+function handleStart(e) {
+    e.preventDefault();
+    drawing = true;
+    [lastX, lastY] = [e.touches[0].clientX, e.touches[0].clientY];
+}
+
+function handleMove(e) {
+    e.preventDefault();
+    if(!drawing) return;
+    draw(e.touches[0].clientX, e.touches[0].clientY);
+}
+
+function handleEnd(e) {
+    e.preventDefault();
+    drawing = false;
+}
+
+// Existing mouse event listeners
 canvas.addEventListener('mousedown', (e) => {
     drawing = true;
     [lastX, lastY] = [e.offsetX, e.offsetY];
 });
-canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
 canvas.addEventListener('mouseup', () => drawing = false);
 canvas.addEventListener('mouseout', () => drawing = false);
+
+// New touch event listeners
+canvas.addEventListener('touchstart', handleStart);
+canvas.addEventListener('touchmove', handleMove);
+canvas.addEventListener('touchend', handleEnd);
+canvas.addEventListener('touchcancel', handleEnd);
+
 
 // Clear canvas
 clear.addEventListener('click', () => context.clearRect(0, 0, canvas.width, canvas.height));

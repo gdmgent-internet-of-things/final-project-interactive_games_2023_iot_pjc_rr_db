@@ -33,55 +33,22 @@ function draw(e) {
     context.beginPath();
     context.moveTo(lastX, lastY);
 
-    // we need to get touch event's clientX and clientY
-    if(e.touches) { // If this is a touch event
-        context.lineTo(e.touches[0].clientX, e.touches[0].clientY);
-        [lastX, lastY] = [e.touches[0].clientX, e.touches[0].clientY];
-    } else { // If this is a mouse event
-        context.lineTo(e.offsetX, e.offsetY);
-        [lastX, lastY] = [e.offsetX, e.offsetY];
-    }
-
+    context.lineTo(e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top);
+    [lastX, lastY] = [e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top];
+    
     context.stroke();
 }
 
-// New touch event handler functions
-function handleStart(e) {
-    e.preventDefault();
-    drawing = true;
-    [lastX, lastY] = [e.touches[0].clientX, e.touches[0].clientY];
-}
-
-function handleMove(e) {
-    e.preventDefault();
-    if(!drawing) return;
-    draw(e.touches[0].clientX, e.touches[0].clientY);
-}
-
-function handleEnd(e) {
-    e.preventDefault();
-    drawing = false;
-}
-
 // Event listeners
-canvas.addEventListener('mousedown', (e) => {
+canvas.addEventListener('pointerdown', (e) => {
     drawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    [lastX, lastY] = [e.clientX - canvas.getBoundingClientRect().left, e.clientY - canvas.getBoundingClientRect().top];
 });
 
-canvas.addEventListener('touchstart', (e) => {
-    drawing = true;
-    // touchstart gives a list of touch points. We just need the first touch point here.
-    [lastX, lastY] = [e.touches[0].clientX, e.touches[0].clientY];
-});
+canvas.addEventListener('pointermove', draw);
 
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('touchmove', draw);
-
-canvas.addEventListener('mouseup', () => drawing = false);
-canvas.addEventListener('mouseout', () => drawing = false);
-canvas.addEventListener('touchend', () => drawing = false);
-
+canvas.addEventListener('pointerup', () => drawing = false);
+canvas.addEventListener('pointerout', () => drawing = false);
 
 // Clear canvas
 clear.addEventListener('click', () => context.clearRect(0, 0, canvas.width, canvas.height));
@@ -102,7 +69,6 @@ savePic.addEventListener('click', function() {
     link.download = 'myImage.png';
     link.click();
 });
-
 
 const prompts = [
     "Draw a moustache!",

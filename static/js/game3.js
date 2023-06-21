@@ -26,15 +26,23 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 }
 
 // Existing Drawing function
-function draw(x, y) {
+function draw(e) {
     if(!drawing) return;
     context.strokeStyle = currentColor;
     context.lineWidth = stroke.value;
     context.beginPath();
     context.moveTo(lastX, lastY);
-    context.lineTo(x, y);
+
+    // we need to get touch event's clientX and clientY
+    if(e.touches) { // If this is a touch event
+        context.lineTo(e.touches[0].clientX, e.touches[0].clientY);
+        [lastX, lastY] = [e.touches[0].clientX, e.touches[0].clientY];
+    } else { // If this is a mouse event
+        context.lineTo(e.offsetX, e.offsetY);
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    }
+
     context.stroke();
-    [lastX, lastY] = [x, y];
 }
 
 // New touch event handler functions
@@ -55,20 +63,24 @@ function handleEnd(e) {
     drawing = false;
 }
 
-// Existing mouse event listeners
+// Event listeners
 canvas.addEventListener('mousedown', (e) => {
     drawing = true;
     [lastX, lastY] = [e.offsetX, e.offsetY];
 });
-canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
+
+canvas.addEventListener('touchstart', (e) => {
+    drawing = true;
+    // touchstart gives a list of touch points. We just need the first touch point here.
+    [lastX, lastY] = [e.touches[0].clientX, e.touches[0].clientY];
+});
+
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('touchmove', draw);
+
 canvas.addEventListener('mouseup', () => drawing = false);
 canvas.addEventListener('mouseout', () => drawing = false);
-
-// New touch event listeners
-canvas.addEventListener('touchstart', handleStart);
-canvas.addEventListener('touchmove', handleMove);
-canvas.addEventListener('touchend', handleEnd);
-canvas.addEventListener('touchcancel', handleEnd);
+canvas.addEventListener('touchend', () => drawing = false);
 
 
 // Clear canvas

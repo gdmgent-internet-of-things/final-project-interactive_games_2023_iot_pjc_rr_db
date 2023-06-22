@@ -123,6 +123,7 @@ renderGame(); // Render the game at the start
 // Voice command logic
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = new window.SpeechRecognition();
+recognition.lang = 'nl-NL'; // Set the language to Dutch
 
 // recognition.interimResults = true; // Add this line
 
@@ -135,16 +136,16 @@ recognition.addEventListener('result', (e) => {
         .join('');
 
     switch(command.toLowerCase()) {
-        case 'python':
+        case 'diederik':
             movePlayer(-1, 0);
             break;
-        case 'javascript':
+        case 'peter':
             movePlayer(1, 0);
             break;
-        case 'raspberry':
+        case 'ruben':
             movePlayer(0, -1);
             break;
-        case 'laptop':
+        case 'jan':
             movePlayer(0, 1);
             break;
     }

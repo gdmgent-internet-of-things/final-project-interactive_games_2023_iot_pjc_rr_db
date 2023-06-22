@@ -3,7 +3,7 @@ let playerPosition = { x: 0, y: 0 };
 let exitPosition = { x: 0, y: 0 };
 let score = 0;
 
-const gridSize = 8; // You can adjust the size of the grid
+const gridSize = 8;
 
 function generateLabyrinth() {
     let isSolvable = false;
@@ -12,17 +12,15 @@ function generateLabyrinth() {
         for(let i = 0; i < gridSize; i++) {
             labyrinth[i] = [];
             for(let j = 0; j < gridSize; j++) {
-                labyrinth[i][j] = Math.random() < 0.28 ? 'wall' : 'empty'; // 30% chance of a cell being a wall
+                labyrinth[i][j] = Math.random() < 0.28 ? 'wall' : 'empty';
             }
         }
 
-        // Starting position for player and exit
         playerPosition = { x: 0, y: 0 };
         exitPosition = { x: gridSize - 1, y: gridSize - 1 };
         labyrinth[playerPosition.x][playerPosition.y] = 'player';
         labyrinth[exitPosition.x][exitPosition.y] = 'exit';
 
-        // Check if the labyrinth is solvable using DFS
         isSolvable = dfs(playerPosition.x, playerPosition.y, []);
     }
 }
@@ -32,22 +30,21 @@ function dfs(x, y, visited) {
         return false;
     }
 
-    // If we have already visited this cell, return
     for(let i = 0; i < visited.length; i++) {
         if(visited[i].x === x && visited[i].y === y) {
             return false;
         }
     }
 
-    // Mark the cell as visited
+    
     visited.push({ x: x, y: y });
 
-    // If we have reached the exit, return true
+    
     if(x === exitPosition.x && y === exitPosition.y) {
         return true;
     }
 
-    // Try to find a path from the current cell to the exit
+    
     return dfs(x - 1, y, visited) || dfs(x + 1, y, visited) || dfs(x, y - 1, visited) || dfs(x, y + 1, visited);
 }
 
@@ -58,19 +55,17 @@ function movePlayer(dx, dy) {
     const newY = playerPosition.y + dy;
 
     if(newX < 0 || newY < 0 || newX >= gridSize || newY >= gridSize || labyrinth[newX][newY] === 'wall') {
-        // If the player tries to move out of the grid or into a wall, do nothing
         return;
     }
 
-    labyrinth[playerPosition.x][playerPosition.y] = 'empty'; // Empty the previous player position
+    labyrinth[playerPosition.x][playerPosition.y] = 'empty'; 
     playerPosition = { x: newX, y: newY };
-    labyrinth[newX][newY] = 'player'; // Set new player position
+    labyrinth[newX][newY] = 'player'; 
 
     if(newX === exitPosition.x && newY === exitPosition.y) {
         score += 1;
-        generateLabyrinth(); // Generate a new labyrinth when the player reaches the exit
+        generateLabyrinth(); 
 
-        // Send score to server
         fetch('/leaderboard', { 
             method: 'POST',
             headers: {
@@ -85,13 +80,13 @@ function movePlayer(dx, dy) {
         });
     }
 
-    renderGame(); // Re-render the game after moving the player
+    renderGame(); 
 }
 
 
 function renderGame() {
     const gameDiv = document.getElementById('game');
-    gameDiv.innerHTML = ''; // Clear the previous labyrinth
+    gameDiv.innerHTML = '';
 
     const table = document.createElement('table');
     gameDiv.appendChild(table);
@@ -103,29 +98,25 @@ function renderGame() {
         for(let j = 0; j < gridSize; j++) {
             const cell = document.createElement('td');
             row.appendChild(cell);
-            cell.className = labyrinth[i][j]; // The CSS class corresponds to the type of cell
+            cell.className = labyrinth[i][j]; 
         }
     }
 
     const scoreDiv = document.createElement('div');
     gameDiv.appendChild(scoreDiv);
-    scoreDiv.id = 'score'; // Add id to the score div
+    scoreDiv.id = 'score'; 
     scoreDiv.textContent = 'Score: ' + score;
 }
 
 
-// Call these functions to start the game
+
 generateLabyrinth();
-renderGame(); // Render the game at the start
+renderGame(); 
 
-// ... rest of your existing code ...
 
-// Voice command logic
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = new window.SpeechRecognition();
-recognition.lang = 'nl-NL'; // Set the language to Dutch
-
-// recognition.interimResults = true; // Add this line
+recognition.lang = 'nl-NL';
 
 recognition.start();
 
@@ -150,13 +141,11 @@ recognition.addEventListener('result', (e) => {
             break;
     }
 
-    // after processing the command, start recognition again for the next command
     recognition.start();
 });
 
 recognition.addEventListener('end', recognition.start);
 
-// Keyboard event listeners
 window.addEventListener('keydown', function(event) {
     switch(event.key) {
         case 'ArrowUp':    movePlayer(-1, 0); break;
@@ -171,7 +160,6 @@ document.getElementById('leaderboard-button').addEventListener('click', function
 });
 
 
-// Add event listeners for the arrow keys
 window.addEventListener('keydown', function(event) {
     switch(event.key) {
         case 'ArrowUp':    movePlayer(-1, 0); break;

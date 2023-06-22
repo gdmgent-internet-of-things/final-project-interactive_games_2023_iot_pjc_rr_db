@@ -15,6 +15,7 @@
             <li><a href="/game5">Voice Trivia</a></li>
             <li><a href="/game6">HandPong</a></li>
             <li><a href="/game7">LoveTester</a></li>
+            <li><a href="/game8">FingerVision</a></li>
     </div>
     <div id="main-content">
         <h1>Welcome, {{ current_user.username }}!👋</h1>
@@ -58,7 +59,13 @@
             <h3>LoveTester</h3>
             <p>LoveTester: Unleash the magic of facial recognition in a captivating love game. Snap a selfie and let LoveTester analyze your compatibility. Discover the secrets of romance with this interactive and fun experience. Are you a perfect match? Find out now with LoveTester's innovative facial recognition technology.</p>
             <button onclick="location.href='{{ url_for('game7') }}'">Speel</button>
-            <img src="{{ url_for('static', filename='images/LoveTester.jpg') }}" alt="HandPong">
+            <img src="{{ url_for('static', filename='images/LoveTester.jpg') }}" alt="LoveTester">
+            </div>
+        <div class="game">
+            <h3>FingerVision</h3>
+            <p>FingerVision: Turn your camera into a canvas and draw with your fingers in augmented reality. Unleash your creativity and create artwork in real-time, adding your personal touch to the world around you. Share your masterpieces and immerse yourself in a unique artistic experience.</p>
+            <button onclick="location.href='{{ url_for('game8') }}'">Speel</button>
+            <img src="{{ url_for('static', filename='images/FingerVision.jpg') }}" alt="FingerVision">
             </div>
     </div>
 

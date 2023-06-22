@@ -13,6 +13,8 @@ from wtforms.validators import DataRequired, Email, EqualTo
 import os
 from alembic import op
 import sqlalchemy as sa
+import traceback
+from flask import send_from_directory
 
 
 app = Flask(__name__)
@@ -72,8 +74,6 @@ class PongGameScore(db.Model):
 
     def __repr__(self):
         return f"PongGameScore(name={self.name}, score={self.score}, point_diff={self.point_diff})"
-
-
 
 with app.app_context():
     db.create_all()
@@ -159,6 +159,11 @@ def game6():
 def game7():
     return render_template('game7.html')
 
+@app.route('/game8')
+@login_required
+def game8():
+    return render_template('game8.html')
+
 @app.route('/leaderboard', methods=['GET', 'POST'])
 @login_required
 def leaderboard():
@@ -213,3 +218,4 @@ def save_pong_score():
 def pong_leaderboard():
     scores = PongGameScore.query.order_by(PongGameScore.point_diff.desc()).all()
     return render_template('pong_leaderboard.html', scores=scores)
+

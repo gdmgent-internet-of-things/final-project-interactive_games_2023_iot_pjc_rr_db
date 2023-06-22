@@ -12,6 +12,9 @@
             <li><a href="/game1">Echo Maze</a></li>
             <li><a href="/game3">Drawscape</a></li>
             <li><a href="/game4">SerpentSway</a></li>
+            <li><a href="/game5">Voice Trivia</a></li>
+            <li><a href="/game6">HandPong</a></li>
+            <li><a href="/game7">LoveTester</a></li>
     </div>
     <div id="main-content">
         <h1>Welcome, {{ current_user.username }}!👋</h1>
@@ -37,6 +40,25 @@
             <button onclick="location.href='{{ url_for('game4') }}'">Speel</button>
             <button onclick="location.href='{{ url_for('snake_leaderboard') }}'">Leaderboard</button>
             <img src="{{ url_for('static', filename='images/SerpentSway.jpg') }}" alt="SerpentSway">
+            </div>
+        <div class="game">
+            <h3>Voice Trivia</h3>
+            <p>VoiceQuiz Trivia: Answer challenging questions using your voice. With diverse categories, real-time feedback, and immersive gameplay, test your knowledge in an interactive trivia experience. Solo or with friends, it's the next level of voice-based gaming.</p>
+            <button onclick="location.href='{{ url_for('game5') }}'">Speel</button>
+            <img src="{{ url_for('static', filename='images/VoiceTrivia.jpg') }}" alt="VoiceTrivia">
+            </div>
+        <div class="game">
+            <h3>HandPong</h3>
+            <p>HandPong: Immerse yourself in a unique gaming experience where your hands become the controllers. Using cutting-edge camera recognition technology, HandPong enables you to control the game using both hands. Engage in thrilling matches as you maneuver your hands to play the classic game of Pong. Experience the excitement of intuitive hand gestures and masterful hand-eye coordination in this captivating and interactive gaming adventure.</p>
+            <button onclick="location.href='{{ url_for('game6') }}'">Speel</button>
+            <button onclick="location.href='{{ url_for('pong_leaderboard') }}'">Leaderboard</button>
+            <img src="{{ url_for('static', filename='images/HandPong.jpg') }}" alt="HandPong">
+            </div>
+        <div class="game">
+            <h3>LoveTester</h3>
+            <p>LoveTester: Unleash the magic of facial recognition in a captivating love game. Snap a selfie and let LoveTester analyze your compatibility. Discover the secrets of romance with this interactive and fun experience. Are you a perfect match? Find out now with LoveTester's innovative facial recognition technology.</p>
+            <button onclick="location.href='{{ url_for('game7') }}'">Speel</button>
+            <img src="{{ url_for('static', filename='images/LoveTester.jpg') }}" alt="HandPong">
             </div>
     </div>
 

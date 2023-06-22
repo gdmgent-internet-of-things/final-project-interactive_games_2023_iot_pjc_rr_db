@@ -63,6 +63,15 @@ class SnakeGameScore(db.Model):
 
     def __repr__(self):
         return f"SnakeGameScore(name={self.name}, score={self.score})"
+    
+class PongGameScore(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))  # new field for player's name
+    score = db.Column(db.Integer)
+    point_diff = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f"PongGameScore(name={self.name}, score={self.score}, point_diff={self.point_diff})"
 
 
 
@@ -135,6 +144,20 @@ def game3():
 def game4():
     return render_template('game4.html')
 
+@app.route('/game5')
+@login_required
+def game5():
+    return render_template('game5.html')
+
+@app.route('/game6')
+@login_required
+def game6():
+    return render_template('game6.html')
+
+@app.route('/game7')
+@login_required
+def game7():
+    return render_template('game7.html')
 
 @app.route('/leaderboard', methods=['GET', 'POST'])
 @login_required
@@ -176,3 +199,17 @@ def save_snake_score():
 def snake_leaderboard():
     scores = SnakeGameScore.query.order_by(SnakeGameScore.score.desc()).all()
     return render_template('snake_leaderboard.html', scores=scores)
+
+
+@app.route('/pong_score', methods=['POST'])
+def save_pong_score():
+    data = request.get_json()
+    new_score = PongGameScore(name=data['name'], score=data['score'], point_diff=data['point_diff'])
+    db.session.add(new_score)
+    db.session.commit()
+    return {"message": "Score saved successfully"}, 201
+
+@app.route('/pong_leaderboard')
+def pong_leaderboard():
+    scores = PongGameScore.query.order_by(PongGameScore.point_diff.desc()).all()
+    return render_template('pong_leaderboard.html', scores=scores)

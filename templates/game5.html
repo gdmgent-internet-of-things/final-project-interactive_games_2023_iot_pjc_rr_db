@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice Trivia</title>
+    <style>
+        /* Insert your CSS here */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #202020;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        /* Your other CSS rules... */
+
+        #trivia {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #151515;
+        }
+
+        #question, #score {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #hint, #skip, #status {
+            font-size: 18px;
+            cursor: pointer;
+            color: #e82d2d;
+        }
+
+        #hint:hover, #skip:hover {
+            color: #a30f0f;
+        }
+
+        #status {
+            color: #ffffff;
+        }
+        
+        #start-listening, #next-question {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e82d2d;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+        #home-button {
+            background-color: #e82d2d;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            border-radius: 15px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 120px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-bottom: 10px;
+          }
+    </style>
+</head>
+<body>
+    <div id="trivia">
+        <p id="score">Score: 0</p>
+        <p id="question"></p>
+        <p id="hint">Toon hint</p>
+        <p id="skip">Vraag overslaan</p>
+        <button id="start-listening">Houd ingedrukt om te praten</button>
+        <button id="next-question">Volgende vraag</button>
+        <p id="status"></p>
+        <p id="spoken-text"></p>
+        <button id="home-button">Home</button>
+    </div>
+
+    
+
+    <script>
+        let triviaQuestions = [
+    { question: "Welke stad wordt ook wel de Diamantstad genoemd?", answer: "Antwerpen", hint: "Het is de grootste stad van Vlaanderen." },
+    { question: "In welke stad bevindt zich het Gravensteen?", answer: "Gent", hint: "Deze stad is ook bekend voor de Gentse Feesten." },
+    { question: "In welke stad bevindt zich de Onze-Lieve-Vrouwebasiliek?", answer: "Tongeren", hint: "Dit is de oudste stad van België." },
+    { question: "In welke stad bevindt zich het Belfort van België?", answer: "Brugge", hint: "Deze stad staat bekend als de 'Venetië van het Noorden'." },
+    { question: "Welke stad staat bekend als de 'Hoofdstad van het Waasland'?", answer: "Sint-Niklaas", hint: "Deze stad heeft het grootste marktplein van België." },
+    /* Add more questions as needed */
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+recognition.lang = 'nl-NL';
+recognition.interimResults = true;
+recognition.maxAlternatives = 5;
+
+function askQuestion() {
+    let question = triviaQuestions[currentQuestion];
+    document.getElementById("question").innerText = question.question;
+    document.getElementById("hint").innerText = "Toon hint";
+    document.getElementById("skip").style.display = "block";
+    document.getElementById("start-listening").style.display = "block";
+    document.getElementById("next-question").style.display = "none";
+    document.getElementById("status").innerText = "";
+}
+
+document.getElementById("hint").onclick = function() {
+    document.getElementById("hint").innerText = triviaQuestions[currentQuestion].hint;
+}
+
+document.getElementById("skip").onclick = function() {
+    currentQuestion++;
+    if (currentQuestion < triviaQuestions.length) {
+        askQuestion();
+    } else {
+        document.getElementById("question").innerText = "Je hebt alle vragen beantwoord!";
+        document.getElementById("skip").style.display = "none";
+        document.getElementById("hint").style.display = "none";
+        document.getElementById("start-listening").style.display = "none";
+        document.getElementById("status").innerText ="Je eindscore is: " + score;
+    }
+}
+
+document.getElementById("next-question").onclick = function() {
+    currentQuestion++;
+    if (currentQuestion < triviaQuestions.length) {
+        askQuestion();
+    } else {
+        document.getElementById("question").innerText = "Je hebt alle vragen beantwoord!";
+        document.getElementById("skip").style.display = "none";
+        document.getElementById("hint").style.display = "none";
+        document.getElementById("start-listening").style.display = "none";
+        document.getElementById("status").innerText ="Je eindscore is: " + score;
+    }
+}
+
+recognition.onresult = function(event) {
+    let transcript = Array.from(event.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('');
+
+    document.getElementById("spoken-text").innerText = transcript;
+
+    if(event.results[0].isFinal) {
+        let answer = transcript.toLowerCase();
+        if(answer === triviaQuestions[currentQuestion].answer.toLowerCase()) {
+            score++;
+            document.getElementById("score").innerText = "Score: " + score;
+            document.getElementById("start-listening").style.display = "none";
+            document.getElementById("next-question").style.display = "block";
+            document.getElementById("status").innerText = "Correct! Druk op 'Volgende vraag' om door te gaan.";
+        } else {
+            document.getElementById("status").innerText = "Helaas, dat is niet correct. Probeer het opnieuw of druk op 'Vraag overslaan'.";
+        }
+    }
+}
+
+document.getElementById("start-listening").addEventListener("mousedown", function() {
+    recognition.start();
+    document.getElementById("status").innerText = "Luisteren...";
+});
+
+document.getElementById("start-listening").addEventListener("mouseup", function() {
+    recognition.stop();
+    document.getElementById("status").innerText = "Verwerken...";
+});
+
+askQuestion();
+
+
+document.getElementById('home-button').addEventListener('click', function() {
+    window.location.href = '/';
+  });ss
+    </script>
+</body>
+</html>
